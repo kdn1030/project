@@ -10,6 +10,8 @@ void setup() {
 }
 
 void loop() {
+  // TEST TEST
+
   if(BTSerial.available())        //값이 들어오면
   {
     char bt;                     //제어할 변수 bt선언
