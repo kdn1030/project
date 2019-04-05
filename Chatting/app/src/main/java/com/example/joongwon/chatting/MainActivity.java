@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         switch (v.getId()){
             case R.id.button1:
                 intent = new Intent(this,Chat1.class);
+// break;;;;;;
                 break;
         }
         startActivity(intent);
