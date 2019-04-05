@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+// test ssource ajldljalfal
+
     // MainActivity 에서 Chat1 으로 이동할 수 있게 함
     public void onClick(View v){
         Intent intent = null;
