@@ -1,4 +1,4 @@
-package com.example.joongwon.chatting;
+﻿package com.example.joongwon.chatting;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
