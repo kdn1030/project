@@ -32,6 +32,8 @@ public class OTPActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<PermissionListItem> items = new ArrayList<>();
 
+
+    private static final String TAG = "OTPActivity";
     private String TAG_JSON = "webnautes", mJsonString;
 
     ArrayList<String> dbid = new ArrayList<>();
@@ -50,6 +52,8 @@ public class OTPActivity extends AppCompatActivity {
         adapter = new OTPAdapter(); // adapter 초기화
         OTPList otpList = new OTPList();
         otpList.execute("12");
+
+        Log.e(TAG, "onCreate in OTPActivity");
     }
 
 
@@ -138,6 +142,7 @@ public class OTPActivity extends AppCompatActivity {
             PermissionListItemView view = new PermissionListItemView(getApplicationContext());
             PermissionListItem item = items.get(position);
 
+            Log.e(TAG, "id = " + item.getId() + ", " + "name = " + item.getName() + ", " + "birthdaty = " + item.getBirthday() + ", " + "permission = " + item.getPermission());
             // item 에 있는 Guest 의 Id, Name, Birthday, Permission 가져옴
             view.setText1(item.getId());
             view.setText2(item.getName());

@@ -35,6 +35,8 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
     Button button;
     ArrayList<PermissionListItem> items = new ArrayList<>();
 
+    private static final String TAG = "OTP_Result";
+
     private String TAG_JSON = "webnautes", mJsonString;
 
     ArrayList<String> dbid = new ArrayList<>();
@@ -52,6 +54,8 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
         adapter = new OTPAdapter(); // adapter 초기화
         OTPList otpList = new OTPList();
         otpList.execute("12");
+
+        Log.e(TAG, "onCreate in OTP_Result");
     }
 
     private void findViewById() {
@@ -67,6 +71,7 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
         @Override
         public int getCount() {
             // 현재 Guest 의 수를 반환
+            Log.e(TAG, "count of guest = " + items.size());
             return items.size();
         }
 
@@ -216,6 +221,7 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
 
         @Override
         protected String doInBackground(String... strings) {
+            Log.e(TAG, "doInBackground in OTP_Result");
             // 새로 만든 스레드에 있는 영역
             String postParameters = "name=" + strings[0];
             try { // 서버 연결
@@ -255,6 +261,7 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
                 e.printStackTrace();
                 error = true;
                 message = "네트워크 연결 실패\n3G/4G WIFI 연결을 확인해주세요.";
+                Log.e(TAG, "Network error.");
                 return null;
             }
             return null;
@@ -274,6 +281,7 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
                 }
                 //Log.e("완료되고", "0");
             } catch (JSONException e) {
+                Log.e(TAG, "showResult, error = " + e);
             }
         }
     }
@@ -363,6 +371,8 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
             } catch (Exception e) {
                 error = true;
                 message = "네트워크 연결 실패\n3G/4G WIFI 연결을 확인해주세요.";
+                Log.e(TAG, "Network error.");
+                Log.e(TAG, "doInBackground, error = " + e);
                 return null;
             }
             return null;
@@ -435,6 +445,8 @@ public class OTP_Result extends AppCompatActivity implements View.OnClickListene
             } catch (Exception e) {
                 error = true;
                 message = "네트워크 연결 실패\n3G/4G WIFI 연결을 확인해주세요.";
+                Log.e(TAG, "Network error in OTP_Result");
+                Log.e(TAG, "doInBackground, error = " + e);
                 return null;
             }
             return null;

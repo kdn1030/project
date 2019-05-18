@@ -3,6 +3,7 @@ package com.example.joongwon.m_a;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class MemberList extends AppCompatActivity {
     ArrayList<PermissionListItem> items = new ArrayList<>();
     PermissionAdapter adapter;
 
+    private static final String TAG = "MemberList";
+
     private String TAG_JSON = "webnautes", mJsonString;
 
     ArrayList<String> dbid = new ArrayList<>();
@@ -46,6 +49,8 @@ public class MemberList extends AppCompatActivity {
 
         PermissionLIst permissionLIst = new PermissionLIst();
         permissionLIst.execute("12");
+
+        Log.e(TAG, "onCreate in MemberList");
     }
 
     class PermissionAdapter extends BaseAdapter {
@@ -78,6 +83,7 @@ public class MemberList extends AppCompatActivity {
 
             // Master 에서 회원목록을 볼 수 있게 함
             // 아이디 이름 생일 권한
+            Log.e(TAG, "id = " + item.getId() + ", " + "name = " + item.getName() + ", " + "birthdaty = " + item.getBirthday() + ", " + "permission = " + item.getPermission());
             view.setText1(item.getId());
             view.setText2(item.getName());
             view.setText3(item.getBirthday());
@@ -145,6 +151,7 @@ public class MemberList extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            Log.e(TAG, "doInBackground in MemberList");
             // 새로 만든 스레드에 있는 영역
             String postParameters = "name=" + strings[0];
             try { // 서버 연결
@@ -187,6 +194,7 @@ public class MemberList extends AppCompatActivity {
                 e.printStackTrace();
                 error = true;
                 message = "네트워크 연결 실패\n3G/4G WIFI 연결을 확인해주세요.";
+                Log.e(TAG, "Network error.");
                 return null;
             }
             return null;
@@ -197,6 +205,7 @@ public class MemberList extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(mJsonString);
                 JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
 
+                Log.e(TAG, "showResult, jsonarray length = " + jsonArray.length());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject item = jsonArray.getJSONObject(i);
                     dbid.add(item.getString("userID"));
@@ -206,6 +215,7 @@ public class MemberList extends AppCompatActivity {
                 }
                 // Log.e("완료되고", "0");
             } catch (JSONException e) {
+                Log.e(TAG, "showResult, error = " + e);
             }
         }
     }

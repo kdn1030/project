@@ -43,7 +43,12 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 // 블루투스
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
+    private static int use_emulator = 0;
+
     Button otpButton, signupButton, loginButton, permissionButton, button;
     boolean login = false, otp = false, done = false;
 
@@ -78,10 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        Log.e(TAG, "onResume in MainActivity");
+
         super.onResume();
         login = sharedPreferences.getBoolean("login", false);
         id = sharedPreferences.getString("id", "");
 
+        Log.e(TAG, "login = " + login + ", " + "id = " + id);
         // 로그인에 성공하면 상단 중간에 TextMessage -> "로그인 성공!"
         if (login == true) {
             state.setText("로그인 성공!");
@@ -174,6 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Activity 종료 시 login -> false , 즉 logout 되게 함
     @Override
     protected void onDestroy() {
+        Log.e(TAG, "onDestroy in MainActivity");
+
         editor.putBoolean("login", false);
         editor.remove("id");
         editor.apply();
@@ -190,13 +200,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 블루투스
         bt.stopService(); // 블루투스 중지
         // 블루투스
-
     }
 
     // Activity 의 상태 복원하기
     // Activity 가 Destroy 되었다가 다시 복원될 때 -> onCreate 함수
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate in MainActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -207,11 +217,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 블루투스
         bt = new BluetoothSPP(this); //Initializing
 
+        if(use_emulator == 1) {
+            Log.e(TAG, "use_emulator is 1, onCreate");
+            return;
+        }
+
         if (!bt.isBluetoothAvailable()) { //블루투스 사용 불가
+            Log.e(TAG, "can not use bluetooth");
             Toast.makeText(getApplicationContext()
                     , "Bluetooth is not available"
                     , Toast.LENGTH_SHORT).show();
-            finish();
+                finish();
         }
 
         bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() { //데이터 수신
@@ -222,17 +238,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() { //연결됐을 때
             public void onDeviceConnected(String name, String address) {
+                Log.e(TAG, "onDeviceConnected");
                 Toast.makeText(getApplicationContext()
                         , "Connected to " + name + "\n" + address
                         , Toast.LENGTH_SHORT).show();
             }
 
             public void onDeviceDisconnected() { //연결해제
+                Log.e(TAG, "onDeviceDisconnected");
                 Toast.makeText(getApplicationContext()
                         , "Connection lost", Toast.LENGTH_SHORT).show();
             }
 
             public void onDeviceConnectionFailed() { //연결실패
+                Log.e(TAG, "onDeviceConnectionFailed");
                 Toast.makeText(getApplicationContext()
                         , "Unable to connect", Toast.LENGTH_SHORT).show();
             }
@@ -251,14 +270,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         //
         findViewById();
-
         // 블루투스
-
     }
 
     // 블루투스
     public void onStart() {
         super.onStart();
+
+        if(use_emulator == 1) {
+            Log.e(TAG, "use_emulator is 1, onStart");
+            return;
+        }
+
         if (!bt.isBluetoothEnabled()) { //
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT);
@@ -298,7 +321,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     // 블루투스
-
 
     @Override
     public void onClick(View v) {

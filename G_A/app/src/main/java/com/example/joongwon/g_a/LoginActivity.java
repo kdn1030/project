@@ -19,6 +19,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "LoginActivity";
+
     Button okButton;
     EditText idEdit, pwEdit;
     String id, pw;
@@ -32,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById();
         sharedPreferences = getSharedPreferences("guest", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        Log.e(TAG, "onCreate in LoginActivity");
     }
 
     private void findViewById() {
