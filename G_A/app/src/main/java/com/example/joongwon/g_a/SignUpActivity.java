@@ -20,6 +20,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "SignUpActivity";
+
     EditText birthdayEdit, idEdit, pwEdit, pwEdit2, nameEdit;
     Button okButton, idcheckButton;
     String birthday, id, pw, pw2, name;
@@ -29,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate in SignUpActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         findViewById();

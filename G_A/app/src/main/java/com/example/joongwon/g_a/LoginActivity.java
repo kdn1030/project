@@ -30,13 +30,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate in LoginActivity");
         super.onCreate(savedInstanceState); // Always call the superclass first
         setContentView(R.layout.activity_login);
         findViewById();
         sharedPreferences = getSharedPreferences("guest", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-        Log.e(TAG, "onCreate in LoginActivity");
     }
 
     private void findViewById() {
